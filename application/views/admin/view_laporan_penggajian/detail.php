@@ -8,10 +8,10 @@
 			</div>
 			<div class="row">
 				<div class="col-md-6">
-					<a class="btn btn-warning " href="<?php echo site_url('detail/tambah/' . $id_proyek) ?>">Tambah Data</a>
+					<a class="btn btn-success " href="<?php echo site_url('laporan_penggajian/cetak_laporan/' . $id_proyek) ?>" target="__blank">Cetak PDF</a>
 				</div>
 				<div class="col-md">
-					<form action="<?= site_url("detail/index/$id_proyek") ?>">
+					<form action="<?= site_url("laporan_penggajian/detail/$id_proyek") ?>">
 						<div class="input-group">
 							<input type="text" name="q" id="q" class="form-control" placeholder="Search">
 							<div class="input-group-addon">
@@ -30,7 +30,6 @@
 					<th>Nama Freelance</th>
 					<th>Jobdesk</th>
 					<th>Gaji</th>
-					<th>Action</th>
 				</tr>
 
 				<?php $nomor = 1;
@@ -43,11 +42,6 @@
 						<td> <?php echo $key->nama_freelance; ?></td>
 						<td> <?php echo $key->jobdesk; ?></td>
 						<td> <?php echo $key->gaji; ?></td>
-
-						<td>
-							<a class="btn btn-warning" href="<?php echo site_url("detail/edit/$id_proyek/" . $key->id_penggajian) ?>" class="btn btn-small"> Edit</a>
-							<a class="btn btn-danger" href="<?php echo site_url("detail/delete/$id_proyek/" . $key->id_penggajian) ?>" class="btn btn-small text-danger"> Hapus</a>
-						</td>
 					</tr>
 				<?php endforeach; ?>
 

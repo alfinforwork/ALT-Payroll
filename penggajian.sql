@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 5.0.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 12 Jul 2020 pada 15.20
--- Versi Server: 10.1.19-MariaDB
--- PHP Version: 7.0.13
+-- Generation Time: Jul 15, 2020 at 11:57 AM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_freelance`
+-- Table structure for table `tb_freelance`
 --
 
 CREATE TABLE `tb_freelance` (
@@ -36,7 +37,7 @@ CREATE TABLE `tb_freelance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_freelance`
+-- Dumping data for table `tb_freelance`
 --
 
 INSERT INTO `tb_freelance` (`nik`, `nama`, `alamat`, `jenis_kelamin`, `email`, `telp`) VALUES
@@ -46,7 +47,7 @@ INSERT INTO `tb_freelance` (`nik`, `nama`, `alamat`, `jenis_kelamin`, `email`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_jobdesk`
+-- Table structure for table `tb_jobdesk`
 --
 
 CREATE TABLE `tb_jobdesk` (
@@ -55,10 +56,18 @@ CREATE TABLE `tb_jobdesk` (
   `persen_upah` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_jobdesk`
+--
+
+INSERT INTO `tb_jobdesk` (`id_jobdesk`, `jobdesk`, `persen_upah`) VALUES
+(1, 'Frontend', 40),
+(2, 'backend', 60);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_karyawan`
+-- Table structure for table `tb_karyawan`
 --
 
 CREATE TABLE `tb_karyawan` (
@@ -71,7 +80,7 @@ CREATE TABLE `tb_karyawan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_karyawan`
+-- Dumping data for table `tb_karyawan`
 --
 
 INSERT INTO `tb_karyawan` (`nip`, `nama`, `jenis_kelamin`, `jabatan`, `telp`, `alamat`) VALUES
@@ -80,7 +89,7 @@ INSERT INTO `tb_karyawan` (`nip`, `nama`, `jenis_kelamin`, `jabatan`, `telp`, `a
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_penggajian`
+-- Table structure for table `tb_penggajian`
 --
 
 CREATE TABLE `tb_penggajian` (
@@ -91,10 +100,20 @@ CREATE TABLE `tb_penggajian` (
   `gaji` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tb_penggajian`
+--
+
+INSERT INTO `tb_penggajian` (`id_penggajian`, `id_proyek`, `nik`, `id_jobdesk`, `gaji`) VALUES
+(14, 2, 1242, 1, 400000),
+(15, 2, 12422, 2, 600000),
+(16, 1, 1242, 2, 74),
+(17, 1, 1242, 1, 49);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_proyek`
+-- Table structure for table `tb_proyek`
 --
 
 CREATE TABLE `tb_proyek` (
@@ -108,17 +127,17 @@ CREATE TABLE `tb_proyek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_proyek`
+-- Dumping data for table `tb_proyek`
 --
 
 INSERT INTO `tb_proyek` (`id_proyek`, `nama_proyek`, `nama_client`, `deadline_proyek`, `keterangan`, `tanggal_mulai_proyek`, `total_budget`) VALUES
-(2344, 'rgrg', 'r ft', '2020-07-11', 'yeay', '2020-03-11', 2000000),
-(3311, 'wewrwr', 'r ft', '2020-07-15', 'teet', '2020-07-12', 2147483647);
+(1, 'asd', 'asd', '2020-07-17', 'ada', '2020-07-16', 123),
+(2, 'iapodn', 'asd', '2020-07-31', 'Infus Josss', '2020-07-15', 1000000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tb_user`
+-- Table structure for table `tb_user`
 --
 
 CREATE TABLE `tb_user` (
@@ -127,7 +146,7 @@ CREATE TABLE `tb_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tb_user`
+-- Dumping data for table `tb_user`
 --
 
 INSERT INTO `tb_user` (`username`, `password`) VALUES
@@ -161,7 +180,8 @@ ALTER TABLE `tb_karyawan`
 ALTER TABLE `tb_penggajian`
   ADD PRIMARY KEY (`id_penggajian`),
   ADD KEY `id_proyek` (`id_proyek`,`nik`,`id_jobdesk`),
-  ADD KEY `id_jobdesk` (`id_jobdesk`);
+  ADD KEY `id_jobdesk` (`id_jobdesk`),
+  ADD KEY `tb_penggajian_ibfk_2` (`nik`);
 
 --
 -- Indexes for table `tb_proyek`
@@ -176,16 +196,27 @@ ALTER TABLE `tb_user`
   ADD PRIMARY KEY (`username`);
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `tb_penggajian`
+-- AUTO_INCREMENT for table `tb_penggajian`
+--
+ALTER TABLE `tb_penggajian`
+  MODIFY `id_penggajian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tb_penggajian`
 --
 ALTER TABLE `tb_penggajian`
   ADD CONSTRAINT `tb_penggajian_ibfk_1` FOREIGN KEY (`id_proyek`) REFERENCES `tb_proyek` (`id_proyek`),
-  ADD CONSTRAINT `tb_penggajian_ibfk_2` FOREIGN KEY (`id_penggajian`) REFERENCES `tb_freelance` (`nik`),
+  ADD CONSTRAINT `tb_penggajian_ibfk_2` FOREIGN KEY (`nik`) REFERENCES `tb_freelance` (`nik`),
   ADD CONSTRAINT `tb_penggajian_ibfk_3` FOREIGN KEY (`id_jobdesk`) REFERENCES `tb_jobdesk` (`id_jobdesk`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

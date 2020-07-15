@@ -38,8 +38,8 @@
 			</span>
 		</a>
 		<ul class="treeview-menu">
-			<li><a href="pages/layout/top-nav.html"><i class="fa fa-money"></i> Slip Gaji</a></li>
-			<li><a href="pages/layout/top-nav.html"><i class="fa fa-print"></i> Laporan Penggajian</a></li>
+			<li><a href="<?= site_url('slip_gaji') ?>"><i class="fa fa-money"></i> Slip Gaji</a></li>
+			<li><a href="<?= site_url('laporan_penggajian') ?>"><i class="fa fa-print"></i> Laporan Penggajian</a></li>
 		</ul>
 	</li>
 </body>
